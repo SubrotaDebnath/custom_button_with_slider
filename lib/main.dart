@@ -13,15 +13,20 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
 
+  dynamic _shoeReturnValue(val) {
+    print('Return Value is: $val');
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: CustomButton(),
+          child: CustomButton(
+            onTapFun: _shoeReturnValue,
+          ),
         ),
       ),
     );
   }
 }
-

@@ -18,8 +18,10 @@ class CustomButton extends StatefulWidget {
   final String changeLevelText;
   final Color initialTextColor;
   final Color changeTextColor;
+  final Function onTapFun;
 
   const CustomButton({
+    @required this.onTapFun,
     this.sliderWidth = 150.0,
     this.sliderHeight = 60.0,
     // this.initialColor = Colors.deepOrange,
@@ -44,7 +46,7 @@ class CustomButton extends StatefulWidget {
 class _CustomButtonState extends State<CustomButton> {
   double _dragPosition = 0.0;
   double _dragPercentage = 0.0;
-  bool _buttonInitialState = true;
+  bool _isButtonAsInitialState = true;
   int _colorValue = 0;
 
   // Color initialToChangeColor = widget.changeColor;
@@ -54,10 +56,10 @@ class _CustomButtonState extends State<CustomButton> {
     double newDragPosition = 0.0;
     if (val.dx <= 0.0) {
       newDragPosition = 0.0;
-      _buttonInitialState = true;
+      _isButtonAsInitialState = true;
     } else if (val.dx >= widget.sliderWidth - widget.thumbWidth) {
       newDragPosition = widget.sliderWidth - widget.thumbWidth;
-      _buttonInitialState = false;
+      _isButtonAsInitialState = false;
     } else {
       newDragPosition = val.dx;
       // print('position Value:${0.0/newDragPosition}');
@@ -96,12 +98,15 @@ class _CustomButtonState extends State<CustomButton> {
         behavior: HitTestBehavior.opaque,
         onTap: () {
           print('Taped');
+          _isButtonAsInitialState ? widget.onTapFun(true): widget.onTapFun(false);
         },
         onLongPress: () {
           print('On long Pressed');
+          return _isButtonAsInitialState ? true: false;
         },
         onDoubleTap: () {
           print('On Double Tapped');
+          return _isButtonAsInitialState ? true: false;
         },
         child: Card(
           elevation: widget.elevation,
@@ -139,16 +144,17 @@ class _CustomButtonState extends State<CustomButton> {
                       sliderPosition: _dragPosition,
                       thumbHeight: widget.thumbHeight,
                       thumbWidth: widget.thumbWidth,
+                      thumbRadius: 8.0,
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(12.0),
                       child: Center(
                         child: Text(
-                          _buttonInitialState
+                          _isButtonAsInitialState
                               ? widget.initialLevelText
                               : widget.changeLevelText,
                           style: TextStyle(
-                            color: _buttonInitialState
+                            color: _isButtonAsInitialState
                                 ? widget.initialTextColor
                                 : widget.changeTextColor,
                             fontWeight: FontWeight.bold,
