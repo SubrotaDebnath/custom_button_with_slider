@@ -102,11 +102,11 @@ class _CustomButtonState extends State<CustomButton> {
         },
         onLongPress: () {
           print('On long Pressed');
-          return _isButtonAsInitialState ? true: false;
+          //_isButtonAsInitialState ? true: false;
         },
         onDoubleTap: () {
           print('On Double Tapped');
-          return _isButtonAsInitialState ? true: false;
+          // _isButtonAsInitialState ? true: false;
         },
         child: Card(
           elevation: widget.elevation,
